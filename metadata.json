@@ -1,0 +1,6 @@
+{
+  "name": "Eklavya Developer Portfolio",
+  "description": "Premium full-stack engineering portfolio for Eklavya, featuring a reactive developer terminal console, and an interactive Gemini-powered AI surrogate chatbot.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
