@@ -51,7 +51,7 @@ export default function Hero({ darkMode, onViewProjects }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-sans text-stone-400 font-semibold tracking-tight text-sm sm:text-base uppercase mb-4"
+          className="font-sans text-stone-200 font-bold tracking-widest text-lg sm:text-xl lg:text-2xl uppercase mb-5"
         >
           Eklavya
         </motion.h1>
@@ -61,10 +61,10 @@ export default function Hero({ darkMode, onViewProjects }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-col gap-2 font-display text-4.5xl sm:text-6.5xl md:text-8xl tracking-tighter font-extrabold leading-none mb-6 text-white"
+          className="flex flex-col gap-2 font-display text-4.5xl sm:text-6.5xl md:text-8xl tracking-tighter font-extrabold leading-[1.1] mb-6 text-white"
         >
-          <h2>Full Stack Developer</h2>
-          <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-400 to-indigo-500">
+          <h2 className="pb-1">Full Stack Developer</h2>
+          <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-400 to-indigo-500 pb-3 md:pb-4">
             AI Systems Builder
           </h2>
         </motion.div>

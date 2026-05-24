@@ -51,7 +51,7 @@ export default function Navbar({
           : "border-b border-transparent py-5 bg-transparent"
       }`}
     >
-      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between relative">
         {/* Brand Logo */}
         <a
           href="#"
@@ -80,7 +80,7 @@ export default function Navbar({
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-1 lg:gap-2">
+        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-1 lg:gap-2 md:absolute md:left-1/2 md:-translate-x-1/2">
           {navLinks.map((link) => {
             return (
               <a

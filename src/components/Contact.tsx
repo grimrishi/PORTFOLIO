@@ -10,23 +10,42 @@ export default function Contact({ darkMode }: ContactProps) {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
 
-  const handleFormSubmit = (e: FormEvent) => {
+  const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setStatus("sending");
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 5000);
-    }, 1500);
+    try {
+      const response = await fetch("https://formspree.io/f/mvzyqerq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        // Auto-dismiss the toast after 4 seconds
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("idle");
+        alert("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("idle");
+      alert("An error occurred while sending message. Please try again.");
+    }
   };
 
   const socialLinks = [
-    { name: "Email", href: "mailto:eklavyas10@gmail.com", icon: <Mail size={14} /> },
+    { name: "Email", href: "https://mail.google.com/mail/?view=cm&fs=1&to=eklavyas10@gmail.com", icon: <Mail size={14} /> },
     { name: "GitHub", href: "https://github.com/NightRishi106", icon: <Github size={14} /> },
     { name: "LinkedIn", href: "https://www.linkedin.com/in/eklavya-singh-92894b2a6/", icon: <Linkedin size={14} /> },
-    { name: "X (Twitter)", href: "https://x.com/Eklavya1006", icon: <Twitter size={14} /> }
+    { name: "X (Twitter)", href: "https://x.com", icon: <Twitter size={14} /> }
   ];
 
   return (
@@ -65,7 +84,7 @@ export default function Contact({ darkMode }: ContactProps) {
               </p>
 
               <div className="border-t border-neutral-800/80 pt-4 flex flex-col gap-1.5 font-mono text-[10px] text-stone-500">
-                <span>Inquiries: <a href="mailto:eklavyas10@gmail.com" className="text-neutral-300 hover:text-white transition-colors">eklavyas10@gmail.com</a></span>
+                <span>Inquiries: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eklavyas10@gmail.com" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-white transition-colors">eklavyas10@gmail.com</a></span>
                 <span>Timezone: Globally distributed</span>
               </div>
             </div>
@@ -95,93 +114,81 @@ export default function Contact({ darkMode }: ContactProps) {
           {/* Minimal Form Portal */}
           <div className="md:col-span-7 flex">
             <div className="p-6 sm:p-8 rounded-xl border border-neutral-800 bg-[#111111] w-full flex flex-col justify-between">
-              <form id="contact-form" onSubmit={handleFormSubmit} className="flex flex-col gap-5 flex-1 w-full">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Name field */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="contact-name" className="text-[10px] font-mono text-stone-500 uppercase tracking-wider">
+              <form
+                onSubmit={handleFormSubmit}
+                className="space-y-4 w-full flex-1 flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="form-name" className="text-[10px] font-mono text-stone-500 uppercase tracking-wider block mb-1.5">
                       Name
                     </label>
                     <input
-                      id="contact-name"
+                      id="form-name"
                       type="text"
+                      name="name"
+                      placeholder="Your Name"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Richard Hendricks"
-                      className="px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/40 text-xs text-white focus:outline-none focus:border-neutral-600 transition-all placeholder:text-neutral-600"
+                      className="w-full px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/40 text-xs text-white focus:outline-none focus:border-neutral-600 transition-all placeholder:text-neutral-600"
                     />
                   </div>
 
-                  {/* Email field */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="contact-email" className="text-[10px] font-mono text-stone-500 uppercase tracking-wider">
+                  <div>
+                    <label htmlFor="form-email" className="text-[10px] font-mono text-stone-500 uppercase tracking-wider block mb-1.5">
                       Email
                     </label>
                     <input
-                      id="contact-email"
+                      id="form-email"
                       type="email"
+                      name="email"
+                      placeholder="Your Email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="richard@piedpiper.com"
-                      className="px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/40 text-xs text-white focus:outline-none focus:border-neutral-600 transition-all placeholder:text-neutral-600"
+                      className="w-full px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/40 text-xs text-white focus:outline-none focus:border-neutral-600 transition-all placeholder:text-neutral-600"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="form-message" className="text-[10px] font-mono text-stone-500 uppercase tracking-wider block mb-1.5">
+                      Message
+                    </label>
+                    <textarea
+                      id="form-message"
+                      name="message"
+                      placeholder="Your Message"
+                      required
+                      rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/40 text-xs text-white focus:outline-none focus:border-neutral-600 transition-all resize-none placeholder:text-neutral-600"
                     />
                   </div>
                 </div>
 
-                {/* Message field */}
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-message" className="text-[10px] font-mono text-stone-500 uppercase tracking-wider">
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    required
-                    rows={5}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Describe your project requirement in details..."
-                    className="px-4 py-2.5 rounded-lg border border-neutral-800 bg-neutral-900/40 text-xs text-white focus:outline-none focus:border-neutral-600 transition-all resize-none placeholder:text-neutral-600"
-                  />
-                </div>
-
-                {/* Submit button */}
                 <button
-                  id="submit-contact-form-btn"
                   type="submit"
-                  disabled={status === "sending" || status === "success"}
-                  className="mt-3 py-3 px-5 rounded-lg font-sans font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 bg-white text-black hover:bg-white/90 disabled:opacity-50"
+                  disabled={status === "sending"}
+                  className="mt-3 py-3 px-5 rounded-lg font-sans font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 bg-white text-black hover:bg-white/90 disabled:opacity-50 inline-flex transition-colors"
                 >
-                  {status === "idle" && (
-                    <>
-                      <span>Transmit Message</span>
-                      <Send size={12} />
-                    </>
-                  )}
-                  {status === "sending" && (
-                    <span className="animate-pulse">Locking channels...</span>
-                  )}
-                  {status === "success" && (
-                    <>
-                      <span>Payload Transmitted</span>
-                      <CheckCircle2 size={12} className="text-emerald-500" />
-                    </>
-                  )}
+                  {status === "sending" ? "Sending..." : "Send Message"}
                 </button>
               </form>
 
-              {/* Status Banner */}
+              {/* Success Floating Toast (Bottom Center, high z-index) */}
               <AnimatePresence>
                 {status === "success" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="mt-4 p-3 rounded-lg border border-emerald-500/10 bg-emerald-500/5 text-emerald-400 font-mono text-[10px] flex items-center gap-2"
+                    initial={{ opacity: 0, y: 50, x: "-50%" }}
+                    animate={{ opacity: 1, y: 0, x: "-50%" }}
+                    exit={{ opacity: 0, y: 20, x: "-50%" }}
+                    transition={{ type: "spring", damping: 25, stiffness: 350 }}
+                    className="fixed bottom-8 left-1/2 z-[9999] flex items-center gap-2.5 px-5 py-3 rounded-full border border-emerald-500/20 bg-[#112415] text-emerald-400 shadow-2xl shadow-emerald-950/40 backdrop-blur-md text-xs font-mono font-semibold"
                   >
-                    <CheckCircle2 size={12} className="shrink-0" />
-                    <span>Payload dispatched securely. I will respond within 24 standard hours.</span>
+                    <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                    <span>✓ Message sent</span>
                   </motion.div>
                 )}
               </AnimatePresence>

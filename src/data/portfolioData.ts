@@ -79,7 +79,7 @@ export const projectsData: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Motion"],
     performanceMetric: { value: "<5ms", label: "Render Target Egress" },
     demoUrl: "https://taskflow-psi-sooty.vercel.app/",
-    githubUrl: "https://github.com/grimrishi/taskflow-core"
+    githubUrl: "https://github.com/NightRishi106/Taskflow"
   },
   {
     id: "proj_brick_bean",
@@ -96,7 +96,7 @@ export const projectsData: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS", "Motion", "Lucide React"],
     performanceMetric: { value: "100/100", label: "Lighthouse Performance" },
     demoUrl: "https://brick-and-bean.vercel.app/",
-    githubUrl: "https://github.com/grimrishi/brick-and-bean"
+    githubUrl: "https://github.com/NightRishi106/Brick-and-Bean"
   },
   {
     id: "proj_ochre_ash",
@@ -113,7 +113,7 @@ export const projectsData: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS", "Motion", "Zustand"],
     performanceMetric: { value: "120 FPS", label: "Scroll Render Performance" },
     demoUrl: "https://ochre-ash.vercel.app/",
-    githubUrl: "https://github.com/grimrishi/ochre-and-ash"
+    githubUrl: "https://github.com/NightRishi106/Ochre-Ash"
   },
   {
     id: "proj_pushker_investments",
@@ -130,7 +130,7 @@ export const projectsData: Project[] = [
     techStack: ["React", "TypeScript", "Tailwind CSS", "Recharts", "Lucide React"],
     performanceMetric: { value: "0.02ms", label: "Advisor Engine Calculations" },
     demoUrl: "https://pushker-investments.vercel.app/",
-    githubUrl: "https://github.com/grimrishi/pushker-advisor"
+    githubUrl: "https://github.com/NightRishi106/Pushker-Investments"
   }
 ];
 
